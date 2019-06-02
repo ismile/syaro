@@ -10,10 +10,24 @@
     "run-fix": "react-native start --reset-cache"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/react-native-vector-icons": "^6.4.0",
+    "@types/react-navigation-material-bottom-tabs": "^0.3.1",
+    "axios": "^0.18.0",
+    "immer": "^3.1.2",
     "react": "16.8.3",
     "react-native": "0.59.8",
+    "react-native-fast-image": "^6.0.0",
     "react-native-gesture-handler": "^1.1.0",
-    "react-navigation": "^3.5.1"
+    "react-native-image-progress": "^1.1.1",
+    "react-native-masonry": "^0.5.0-alpha.4",
+    "react-native-masonry-layout": "^1.0.6",
+    "react-native-paper": "^2.15.2",
+    "react-native-progress": "^3.6.0",
+    "react-native-vector-icons": "^6.4.2",
+    "react-navigation": "^3.5.1",
+    "react-navigation-hooks": "^1.0.0-alpha.2",
+    "react-navigation-material-bottom-tabs": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
