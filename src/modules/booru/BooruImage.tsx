@@ -9,6 +9,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import {createImageProgress } from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 import RNFetchBlob from 'rn-fetch-blob'
+import theme from '../../configs/theme';
 
 export default class BooruImage extends React.PureComponent<NavigationScreenProps, any> {
   static navigationOptions = {
@@ -80,8 +81,6 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
     })
     .fetch('GET', url)
     .then((resp) => {
-      console.log(resp, resp.path())
-      // the path of downloaded file
       resp.path()
     })
   }
@@ -89,5 +88,5 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
 
 const ImageProgress = createImageProgress(FastImage);
 const ImageView = function(props) {
-  return <ImageProgress indicator={ProgressBar} {...props} />
+  return <ImageProgress indicator={ProgressBar} indicatorProps={{color: theme.colors.accent}} {...props} />
 }

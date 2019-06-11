@@ -10,6 +10,7 @@ import ProgressBar from 'react-native-progress/Bar';
 import Iconize, { CommunityIconize } from '../../components/iconize';
 import { IPost, MoebooruApi } from '../../Services/Moebooru.api';
 import { NavigationTransitionProps } from 'react-navigation';
+import theme from '../../configs/theme';
 
 const Image = createImageProgress(FastImage);
 const { width } = Dimensions.get( "window" );
@@ -46,11 +47,11 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
           refreshControl={<RefreshControl
             refreshing={this.state.isRefreshing}
             onRefresh={this.handleOnRefresh}
-            tintColor="#ff0000"
+            tintColor={theme.colors.accent}
             title="Loading..."
-            titleColor="#00ff00"
-            colors={[ '#ff0000', '#00ff00', '#0000ff' ]}
-            progressBackgroundColor="#ffff00"
+            titleColor={theme.colors.accent}
+            colors={[ 'black', theme.colors.primary ]}
+            progressBackgroundColor={theme.colors.accent}
           />}
           renderItem={(item:{data:IPost})=><View
           style={{
@@ -65,7 +66,7 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
             <Image
             source={{ uri: item.data.preview_url }}
             indicator={ProgressBar}
-
+            indicatorProps={{color: theme.colors.accent}}
             style={{
               width: columnWidth,
               height: columnWidth / item.data.preview_width * item.data.preview_height,
@@ -126,7 +127,7 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
             alignItems: 'center'
           }}
           icon="apps"
-          onPress={() => this.props.navigation.push('Gallery', {name: 'Yande.re', host: 'yande.re'}) }
+          onPress={() => this.props.navigation.navigate('Menu', {fetch: this._fetchData.bind(this), forceUpdate: this.forceUpdate.bind(this)}) }
         />
       </View>
     </View>
