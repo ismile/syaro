@@ -8,14 +8,14 @@ export class MoebooruApi {
     this.host = host;
   }
 
-  async post(param:IPostParams={limit: 15}, host:string=this.host) {
+  async post(param:IPostParams={limit: 15}, config={host:this.host}) {
     param = {
       limit: 15,
       page: 1,
       ...param
     }
 
-    var res = this.http.get(`http://${this.host}/post.json`, {
+    var res = this.http.get(`http://${config.host}/post.json`, {
       params: param
     })
 

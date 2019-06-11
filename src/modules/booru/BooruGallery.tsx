@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { View, Dimensions, RefreshControl, TouchableHighlight  } from "react-native";
 import FastImage from 'react-native-fast-image';
 import Masonry from 'react-native-masonry-layout';
-import { Appbar, Button, Card, Portal, Text, FAB, Menu,Divider } from 'react-native-paper';
+import { Appbar, Button, Card, Portal, Text, FAB, Menu,Divider, Dialog, TextInput } from 'react-native-paper';
 import {createImageProgress } from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 
@@ -19,9 +19,15 @@ const columnWidth = ( width ) / 2 - 10;
 export default class BooruGallery extends React.PureComponent<NavigationTransitionProps, {posts:Array<IPost>}> {
 
   api:MoebooruApi = new MoebooruApi('konachan.com');
+  defaultData     = {
+    name: 'Konachan',
+    host: 'konachan.com'
+  }
   state           = {
     open: false,
     showMenu: false,
+    showFilter: false,
+    filterTextValue: '',
     posts: [],
     isRefreshing: false,
     params: {
@@ -68,16 +74,36 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
           </View>}
         />
       </View>
+
+      <Portal>
+        <Dialog
+          visible={this.state.showFilter}
+          onDismiss={this.handleHideFilter}>
+          <Dialog.Title>Filter</Dialog.Title>
+          <Dialog.Content>
+          <TextInput
+            // label='Email'
+            value={this.state.filterTextValue}
+            onChangeText={text => this.setState({ filterTextValue: text })}
+          />
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={this.handleHideFilter}>Close</Button>
+            <Button onPress={this.handleClearFilter}>Clear</Button>
+            <Button onPress={this.handleFilter}>Filter</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
       <Appbar.Header>
         {/* <Appbar.Action
           icon={Iconize('menu')}
           onPress={()=> {this.props.navigation.openDrawer()}}
         /> */}
         <Appbar.Content
-          title="Konachan"
-          subtitle="Gallery"
+          title={this.props.navigation.state.params ? this.props.navigation.state.params.name : 'Konachan'}
+          subtitle={(this.props.navigation.state.params && this.props.navigation.state.params.tags) ? this.props.navigation.state.params.tags: 'All'}
         />
-        <Appbar.Action icon="filter-list" onPress={()=> {}} />
+        <Appbar.Action icon="filter-list" onPress={this.handleShowFilter} />
         <Menu
           visible={this.state.showMenu}
           onDismiss={this.handleCloseMenu}
@@ -100,7 +126,7 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
             alignItems: 'center'
           }}
           icon="apps"
-          onPress={() => console.log('Pressed')}
+          onPress={() => this.props.navigation.push('Gallery', {name: 'Yande.re', host: 'yande.re'}) }
         />
       </View>
     </View>
@@ -126,12 +152,35 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
 
   handleCloseMenu = () => this.setState({ showMenu: false });
 
+  handleShowFilter = () => this.setState({ showFilter: true });
+
+  handleHideFilter = () => this.setState({ showFilter: false });
+
+  handleFilter = async () => {
+    var data = this.props.navigation.state.params ? this.props.navigation.state.params: this.defaultData
+    data = {...data, page: 1, tags: this.state.filterTextValue}
+    await this.props.navigation.navigate('Gallery', data)
+    this.handleHideFilter()
+    this._fetchData()
+  }
+
+  handleClearFilter = async () => {
+    var data = this.props.navigation.state.params ? this.props.navigation.state.params: this.defaultData
+    data = {...data, page: 1, tags: null}
+    await this.props.navigation.navigate('Gallery', data)
+    this.setState({filterTextValue: ''});
+    this.handleHideFilter()
+    this._fetchData()
+  }
+
   async _fetchData(params={page: 1}) {
     this.setState(produce(this.state, state => {
       state.isRefreshing = true
     }))
-    var res = await this.api.post(params);
 
+    var data = this.props.navigation.state.params? this.props.navigation.state.params:{...this.defaultData}
+    params.tags = data.tags;
+    var res = await this.api.post(params, data);
     if(params.page == 1) this.refs.masonry.clear();
 
     this.refs.masonry.addItemsWithHeight(res.data.map((d:IPost) => {

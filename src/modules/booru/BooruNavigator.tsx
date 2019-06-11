@@ -9,7 +9,7 @@ import Iconize, { CommunityIconize } from '../../components/iconize';
 import BooruInfo from './BooruInfo';
 
 const BooruNavigator = createStackNavigator({
-  Home: {
+  Gallery: {
     screen: BooruGallery
   },
   Image: {
