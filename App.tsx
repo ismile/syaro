@@ -11,7 +11,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import {Provider as PaperProvider } from 'react-native-paper';
-import Router from './src/Router';
+import BooruNavigator from './src/modules/booru/BooruNavigator';
 import themeConfig from './src/configs/theme';
 
 const instructions = Platform.select({
@@ -26,7 +26,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <PaperProvider theme={themeConfig}>
-      <Router/>
+      <BooruNavigator />
       </PaperProvider>
     );
   }

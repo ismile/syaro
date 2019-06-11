@@ -16,7 +16,7 @@ const { width } = Dimensions.get( "window" );
 const columnWidth = ( width ) / 2 - 10;
 
 
-export default class KonachanGallery extends React.PureComponent<NavigationTransitionProps, {posts:Array<IPost>}> {
+export default class BooruGallery extends React.PureComponent<NavigationTransitionProps, {posts:Array<IPost>}> {
 
   api:MoebooruApi = new MoebooruApi('konachan.com');
   state           = {

@@ -6,7 +6,7 @@ import { Portal, Text } from 'react-native-paper';
 import { NavigationScreenProps } from 'react-navigation';
 import { IPost } from '../../Services/Moebooru.api';
 
-export default class KonachanInfo extends React.PureComponent<NavigationScreenProps, any> {
+export default class BooruInfo extends React.PureComponent<NavigationScreenProps, any> {
   render() {
     let data:IPost = this.props.navigation.state.params;
     return <View style={{ flex: 1, flexDirection: 'column', alignContent: 'flex-start',flexGrow: 10 }}>

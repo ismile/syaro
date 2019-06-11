@@ -10,7 +10,7 @@ import {createImageProgress } from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 import RNFetchBlob from 'rn-fetch-blob'
 
-export default class KonachanImage extends React.PureComponent<NavigationScreenProps, any> {
+export default class BooruImage extends React.PureComponent<NavigationScreenProps, any> {
   static navigationOptions = {
     title: 'Konachan'
   }
