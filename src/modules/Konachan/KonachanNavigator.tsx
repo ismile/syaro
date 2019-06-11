@@ -6,6 +6,7 @@ import KonachanSetting from './KonachanSetting';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import KonachanImage from './KonachanImage';
 import Iconize, { CommunityIconize } from '../../components/iconize';
+import KonachanInfo from './KonachanInfo';
 
 const GalleryNavigator = createStackNavigator({
   Home: {
@@ -13,6 +14,9 @@ const GalleryNavigator = createStackNavigator({
   },
   Image: {
     screen: KonachanImage
+  },
+  Info: {
+    screen: KonachanInfo
   }
 },{
   defaultNavigationOptions: {

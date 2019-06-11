@@ -31,7 +31,7 @@ export default class KonachanGallery extends React.PureComponent<NavigationTrans
 
   render() {
     return <View style={{ flex: 1, flexDirection: 'column', alignContent: 'flex-start' }}>
-      <View style={{flex: 1, flexGrow: 10, padding: 5}}>
+      <View style={{flex: 1, flexGrow: 10, padding: 5, backgroundColor: 'black'}}>
         <Masonry
           ref="masonry"
           columns={2} // optional - Default: 2

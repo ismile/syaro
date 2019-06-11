@@ -28,7 +28,8 @@
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.5.1",
     "react-navigation-hooks": "^1.0.0-alpha.2",
-    "react-navigation-material-bottom-tabs": "^1.0.0"
+    "react-navigation-material-bottom-tabs": "^1.0.0",
+    "rn-fetch-blob": "^0.10.15"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
@@ -39,6 +40,7 @@
     "@types/react-native": "^0.57.42",
     "@types/react-navigation": "^3.0.6",
     "@types/react-test-renderer": "^16.8.1",
+    "@types/rn-fetch-blob": "^1.2.1",
     "babel-jest": "^24.5.0",
     "eslint": "^5.15.3",
     "jest": "^24.5.0",

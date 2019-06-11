@@ -8,7 +8,7 @@ import { IPost } from '../../Services/Moebooru.api';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {createImageProgress } from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
-
+import RNFetchBlob from 'rn-fetch-blob'
 
 export default class KonachanImage extends React.PureComponent<NavigationScreenProps, any> {
   static navigationOptions = {
@@ -19,26 +19,21 @@ export default class KonachanImage extends React.PureComponent<NavigationScreenP
     open: false
   }
 
-  constructor(props:NavigationScreenProps) {
-    super(props)
-
-    console.log(props);
-  }
-
   render() {
+    let data:IPost = this.props.navigation.state.params;
     return <View style={{ flex: 1, flexDirection: 'column', alignContent: 'flex-start' }}>
       <ImageViewer imageUrls={[{
-        url:this.props.navigation.state.params.sample_url,
-        width:  this.props.navigation.state.params.sample_width,
-        height: this.props.navigation.state.params.sample_height}]}
+        url: data.sample_url,
+        width: data.sample_width,
+        height: data.sample_height}]}
         renderImage={ImageView}
         renderIndicator={() => {}}
         />
       <Appbar.Header>
 
         <Appbar.Action icon="arrow-back" accessibilityLabel='Back' onPress={()=> {this.props.navigation.goBack(null)}} />
-        <Appbar.Action icon="archive" accessibilityLabel='Download Original Image' onPress={() => console.log('Pressed archive')} />
-        <Appbar.Action icon="info" accessibilityLabel='Info' onPress={() => console.log('Pressed mail')} />
+        <Appbar.Action icon="archive" accessibilityLabel='Download jpg image' disabled={!data.jpeg_url || data.jpeg_url == ''} onPress={() => this.download('jpg') } />
+        <Appbar.Action icon="info" accessibilityLabel='Info' onPress={() => this.props.navigation.navigate('Info', data) } />
       </Appbar.Header>
       <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
         <FAB
@@ -50,10 +45,45 @@ export default class KonachanImage extends React.PureComponent<NavigationScreenP
             alignItems: 'center'
           }}
           icon="file-download"
-          onPress={() => console.log('Pressed')}
+          onPress={() => this.download()}
         />
       </View>
     </View>
+  }
+
+  download(type='ori') {
+    let data:IPost = this.props.navigation.state.params;
+    var url = data.file_url;
+    switch (type) {
+      case 'jpg':
+        url = data.jpeg_url
+        break;
+      case 'sample':
+        url = data.sample_url
+        break;
+    }
+    var ext:String = url.split('.').pop();
+    var mime = 'image/jpeg';
+    if(ext.toLowerCase() == 'png') mime = 'image/png'
+
+    RNFetchBlob
+    .config({
+        fileCache: true,
+        addAndroidDownloads : {
+            useDownloadManager : true, // <-- this is the only thing required
+            // Optional, override notification setting (default to true)
+            notification : true,
+            description : `Downloading Konachan - ${data.id}.${ext}`,
+            mime: mime,
+            path : `${RNFetchBlob.fs.dirs.PictureDir}/booru/Konachan - ${data.id}.${ext}`
+        }
+    })
+    .fetch('GET', url)
+    .then((resp) => {
+      console.log(resp, resp.path())
+      // the path of downloaded file
+      resp.path()
+    })
   }
 }
 
