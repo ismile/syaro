@@ -6,7 +6,7 @@ import { NavigationTransitionProps, NavigationProp, NavigationScreenProps } from
 import FastImage from 'react-native-fast-image';
 import { IPost } from '../../Services/Moebooru.api';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {createImageProgress } from 'react-native-image-progress';
+import Image, {createImageProgress } from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 import RNFetchBlob from 'rn-fetch-blob'
 import theme from '../../configs/theme';
@@ -21,7 +21,7 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
   }
 
   render() {
-    let data:IPost = this.props.navigation.state.params;
+    let data:IPost = this.props.navigation.state.params.data;
     return <View style={{ flex: 1, flexDirection: 'column', alignContent: 'flex-start' }}>
       <ImageViewer imageUrls={[{
         url: data.sample_url,
@@ -53,7 +53,8 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
   }
 
   download(type='ori') {
-    let data:IPost = this.props.navigation.state.params;
+    let data:IPost = this.props.navigation.state.params.data;
+    let site = this.props.navigation.state.params.site
     var url = data.file_url;
     switch (type) {
       case 'jpg':
@@ -76,7 +77,7 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
             notification : true,
             description : `Downloading Konachan - ${data.id}.${ext}`,
             mime: mime,
-            path : `${RNFetchBlob.fs.dirs.PictureDir}/booru/Konachan - ${data.id}.${ext}`
+            path : `${RNFetchBlob.fs.dirs.PictureDir}/syaro/${url.name} - ${data.id}.${ext}`
         }
     })
     .fetch('GET', url)
@@ -88,5 +89,5 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
 
 const ImageProgress = createImageProgress(FastImage);
 const ImageView = function(props) {
-  return <ImageProgress indicator={ProgressBar} indicatorProps={{color: theme.colors.accent}} {...props} />
+  return <Image indicator={ProgressBar} indicatorProps={{color: theme.colors.accent}} {...props} />
 }

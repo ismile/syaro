@@ -62,7 +62,7 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
             // borderWidth: 1,
             // borderColor: "#dedede"
           }}>
-            <TouchableHighlight onPress={()=> {this.props.navigation.navigate('Image', item.data)}} underlayColor="white">
+            <TouchableHighlight onPress={()=> {this.handleGoToDetail(item)}} underlayColor="white">
             <Image
             source={{ uri: item.data.preview_url }}
             indicator={ProgressBar}
@@ -147,6 +147,13 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
 
   handleOnRefresh = ()=> {
     this._fetchData()
+  }
+
+  handleGoToDetail = (item)=> {
+    this.props.navigation.navigate('Image', {
+      data: item.data,
+      site: this.props.navigation.state? this.props.navigation.state.params: this.defaultData
+    })
   }
 
   handleOpenMenu = () => this.setState({ showMenu: true });
