@@ -55,6 +55,7 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
   download(type='ori') {
     let data:IPost = this.props.navigation.state.params.data;
     let site = this.props.navigation.state.params.site
+    console.log(this.props.navigation.state, 'this.props.navigation.state')
     var url = data.file_url;
     switch (type) {
       case 'jpg':
@@ -77,7 +78,7 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
             notification : true,
             description : `Downloading Konachan - ${data.id}.${ext}`,
             mime: mime,
-            path : `${RNFetchBlob.fs.dirs.PictureDir}/syaro/${url.name} - ${data.id}.${ext}`
+            path : `${RNFetchBlob.fs.dirs.PictureDir}/syaro/${site.name} - ${data.id}.${ext}`
         }
     })
     .fetch('GET', url)

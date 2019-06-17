@@ -152,7 +152,7 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
   handleGoToDetail = (item)=> {
     this.props.navigation.navigate('Image', {
       data: item.data,
-      site: this.props.navigation.state? this.props.navigation.state.params: this.defaultData
+      site: this.props.navigation.state.params? this.props.navigation.state.params: this.defaultData
     })
   }
 
