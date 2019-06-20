@@ -1,6 +1,6 @@
 import {produce} from 'immer';
 import React, {useState} from 'react';
-import { View, Dimensions, RefreshControl, TouchableHighlight  } from "react-native";
+import { View, Dimensions, RefreshControl, TouchableHighlight, PermissionsAndroid  } from "react-native";
 import FastImage from 'react-native-fast-image';
 import Masonry from 'react-native-masonry-layout';
 import { Appbar, Button, Card, Portal, Text, FAB, Menu,Divider, Dialog, TextInput } from 'react-native-paper';
@@ -135,6 +135,7 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
 
   async componentDidMount() {
     await this._fetchData()
+    this.requestPermission()
   }
 
   handleOnEndReached = (event)=> {
@@ -209,4 +210,18 @@ export default class BooruGallery extends React.PureComponent<NavigationTransiti
       state.isRefreshing = false
     }))
   }
+
+  async requestPermission() {
+    try {
+      let check = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+      if(!check) {
+        const granted = await PermissionsAndroid.requestMultiple(
+          [PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE]
+        );
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
 }
