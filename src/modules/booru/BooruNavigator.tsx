@@ -1,11 +1,6 @@
-import React, {useState} from 'react';
-
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { createAppContainer, createStackNavigator } from "react-navigation";
 import BooruGallery from './BooruGallery';
-import BooruSetting from './BooruSetting';
-import { createStackNavigator, createAppContainer } from "react-navigation";
 import BooruImage from './BooruImage';
-import Iconize, { CommunityIconize } from '../../components/iconize';
 import BooruInfo from './BooruInfo';
 import BooruMenu from './BooruMenu';
 

@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { View } from "react-native";
-import { CommunityIconize, Iconize } from '../../components/iconize';
-import { Portal, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
 export default class BooruSetting extends React.PureComponent {
   render() {

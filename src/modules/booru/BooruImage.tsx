@@ -1,28 +1,29 @@
-import React, {useState, memo} from 'react';
-import { View } from "react-native";
-import { Appbar, Button, Card, Portal, Text, FAB } from 'react-native-paper';
-import { CommunityIconize, Iconize } from '../../components/iconize';
-import { NavigationTransitionProps, NavigationProp, NavigationScreenProps } from 'react-navigation';
+import React from 'react';
+import { View, StyleSheet } from "react-native";
 import FastImage from 'react-native-fast-image';
-import { IPost } from '../../Services/Moebooru.api';
+import Image, { createImageProgress } from 'react-native-image-progress';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import Image, {createImageProgress } from 'react-native-image-progress';
+import { Appbar, FAB } from 'react-native-paper';
 import ProgressBar from 'react-native-progress/Bar';
-import RNFetchBlob from 'rn-fetch-blob'
+import { NavigationScreenProps } from 'react-navigation';
+import RNFetchBlob from 'rn-fetch-blob';
 import theme from '../../configs/theme';
+import { IPost } from '../../Services/Moebooru.api';
 
 export default class BooruImage extends React.PureComponent<NavigationScreenProps, any> {
-  static navigationOptions = {
-    title: 'Konachan'
-  }
-
-  state = {
+  state              = {
     open: false
   }
 
+  style               = StyleSheet.create({
+    container         : { flex: 1, flexDirection: 'column', alignContent: 'flex-start' },
+    fabContainer      : { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'},
+    fab               : { position: 'absolute', margin: 'auto', bottom: 28, right: 20, alignItems: 'center' }
+  })
+
   render() {
     let data:IPost = this.props.navigation.state.params.data;
-    return <View style={{ flex: 1, flexDirection: 'column', alignContent: 'flex-start' }}>
+    return <View style={this.style.container}>
       <ImageViewer imageUrls={[{
         url: data.sample_url,
         width: data.sample_width,
@@ -31,20 +32,13 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
         renderIndicator={() => {}}
         />
       <Appbar.Header>
-
         <Appbar.Action icon="arrow-back" accessibilityLabel='Back' onPress={()=> {this.props.navigation.goBack(null)}} />
         <Appbar.Action icon="archive" accessibilityLabel='Download jpg image' disabled={!data.jpeg_url || data.jpeg_url == ''} onPress={() => this.download('jpg') } />
         <Appbar.Action icon="info" accessibilityLabel='Info' onPress={() => this.props.navigation.navigate('Info', data) } />
       </Appbar.Header>
-      <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={this.style.fabContainer}>
         <FAB
-          style={{
-            position: 'absolute',
-            margin: 'auto',
-            right: 20,
-            bottom: 28,
-            alignItems: 'center'
-          }}
+          style={this.style.fab}
           icon="file-download"
           onPress={() => this.download()}
         />
@@ -55,7 +49,7 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
   download(type='ori') {
     let data:IPost = this.props.navigation.state.params.data;
     let site = this.props.navigation.state.params.site
-    console.log(this.props.navigation.state, 'this.props.navigation.state')
+
     var url = data.file_url;
     switch (type) {
       case 'jpg':
@@ -71,15 +65,14 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
 
     RNFetchBlob
     .config({
-        fileCache: true,
-        addAndroidDownloads : {
-            useDownloadManager : true, // <-- this is the only thing required
-            // Optional, override notification setting (default to true)
-            notification : true,
-            description : `Downloading Konachan - ${data.id}.${ext}`,
-            mime: mime,
-            path : `${RNFetchBlob.fs.dirs.PictureDir}/syaro/${site.name} - ${data.id}.${ext}`
-        }
+      fileCache: true,
+      addAndroidDownloads : {
+        useDownloadManager : true,
+        notification : true,
+        description : `Downloading Konachan - ${data.id}.${ext}`,
+        mime: mime,
+        path : `${RNFetchBlob.fs.dirs.PictureDir}/syaro/${site.name} - ${data.id}.${ext}`
+      }
     })
     .fetch('GET', url)
     .then((resp) => {
@@ -89,6 +82,6 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
 }
 
 const ImageProgress = createImageProgress(FastImage);
-const ImageView = function(props) {
+const ImageView = function(props:any) {
   return <Image indicator={ProgressBar} indicatorProps={{color: theme.colors.accent}} {...props} />
 }

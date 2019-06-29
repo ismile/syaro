@@ -1,14 +1,11 @@
-import React, {useState} from 'react';
-import { View, Linking } from "react-native";
-import { List, Appbar } from 'react-native-paper';
-import { CommunityIconize, Iconize } from '../../components/iconize';
-import { Portal, Text } from 'react-native-paper';
+import React from 'react';
+import { StyleSheet, View } from "react-native";
+import { Appbar, List } from 'react-native-paper';
 import { NavigationScreenProps } from 'react-navigation';
-import { IPost } from '../../Services/Moebooru.api';
 
 export default class BooruMenu extends React.PureComponent<NavigationScreenProps, any> {
 
-  state = {
+  state               = {
     data: [{
       name: 'Konachan',
       host: 'konachan.com'
@@ -17,9 +14,15 @@ export default class BooruMenu extends React.PureComponent<NavigationScreenProps
       host: 'yande.re'
     }]
   }
+
+  style               = StyleSheet.create({
+    container         : { flex: 1, flexDirection: 'column', alignContent: 'flex-start',flexGrow: 10 },
+    view              : { flex: 1, backgroundColor: 'black'}
+  })
+
   render() {
-    return <View style={{ flex: 1, flexDirection: 'column', alignContent: 'flex-start',flexGrow: 10 }}>
-    <View style={{flex: 1, backgroundColor: 'black'}}>
+    return <View style={this.style.container}>
+    <View style={this.style.view}>
 
       {this.state.data.map((v, i) => {
         return <List.Item

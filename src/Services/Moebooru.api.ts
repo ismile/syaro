@@ -10,7 +10,7 @@ export class MoebooruApi {
 
   async post(param:IPostParams={limit: 15}, config={host:this.host}) {
     param = {
-      limit: 15,
+      limit: 30,
       page: 1,
       ...param
     }

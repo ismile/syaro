@@ -5714,10 +5714,10 @@ react-native-image-zoom-viewer@^2.2.26:
   dependencies:
     react-native-image-pan-zoom "^2.1.9"
 
-react-native-masonry-layout@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-masonry-layout/-/react-native-masonry-layout-1.0.6.tgz#b0ac509fb22a07b1df91e91b7c56374251aa68e2"
-  integrity sha1-sKxQn7IqB7HfkekbfFY3QlGqaOI=
+react-native-largelist-v3@^3.0.14:
+  version "3.0.14"
+  resolved "https://registry.yarnpkg.com/react-native-largelist-v3/-/react-native-largelist-v3-3.0.14.tgz#0b03dc588ed90f90432361f91ffa26d8e529e7c0"
+  integrity sha512-eom9InjkKCGjFESft3/BmkNttV3EFOhSisd4DKDe/dAaj0+ySt+ukUTSv9AVnLim6HW3MiUkfNgMBxckoVyDqg==
 
 react-native-paper@^2.15.2:
   version "2.15.2"
@@ -5756,6 +5756,11 @@ react-native-safe-area-view@^0.13.0:
   version "1.0.0-alpha.22"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
+
+react-native-spring-scrollview@^2.0.22:
+  version "2.0.22"
+  resolved "https://registry.yarnpkg.com/react-native-spring-scrollview/-/react-native-spring-scrollview-2.0.22.tgz#6d8dbaf485b68a30c330d25e7e22f70ce7574c4c"
+  integrity sha512-y1O/AMq1++AHOjQjT5Nse8GAQ7tOWnWTR67kO06FBHbgyu6EeZ0Ow5KK2EjtmFN0EAY8zFZmXtZyr0Sdht/wJA==
 
 react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   version "1.3.4"
