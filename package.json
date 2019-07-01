@@ -10,9 +10,6 @@
     "run-fix": "react-native start --reset-cache"
   },
   "dependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/react-native-vector-icons": "^6.4.0",
-    "@types/react-navigation-material-bottom-tabs": "^0.3.1",
     "axios": "^0.18.0",
     "immer": "^3.1.2",
     "react": "16.8.3",
@@ -31,12 +28,14 @@
     "rn-fetch-blob": "^0.10.15"
   },
   "devDependencies": {
+		"@types/axios": "^0.14.0",
     "@babel/core": "^7.4.0",
     "@babel/runtime": "^7.4.2",
     "@react-native-community/eslint-config": "^0.0.3",
     "@types/jest": "^24.0.11",
     "@types/react": "^16.8.10",
-    "@types/react-native": "^0.57.42",
+		"@types/react-native": "^0.57.42",
+		"@types/react-native-vector-icons": "^6.4.0",
     "@types/react-navigation": "^3.0.6",
     "@types/react-test-renderer": "^16.8.1",
     "@types/rn-fetch-blob": "^1.2.1",
