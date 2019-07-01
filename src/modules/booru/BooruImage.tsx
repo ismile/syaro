@@ -46,7 +46,7 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
     </View>
   }
 
-  download(type='ori') {
+  async download(type='ori') {
     let data:IPost = this.props.navigation.state.params.data;
     let site = this.props.navigation.state.params.site
 
@@ -63,22 +63,34 @@ export default class BooruImage extends React.PureComponent<NavigationScreenProp
     var mime = 'image/jpeg';
     if(ext.toLowerCase() == 'png') mime = 'image/png'
 
-    RNFetchBlob
-    .config({
-      fileCache: true,
-      addAndroidDownloads : {
-        useDownloadManager : true,
-        notification : true,
-        description : `Downloading Konachan - ${data.id}.${ext}`,
-        mime: mime,
-        path : `${RNFetchBlob.fs.dirs.PictureDir}/syaro/${site.name} - ${data.id}.${ext}`
+    try {
+      let d = await RNFetchBlob
+      .config({
+        fileCache: true,
+        addAndroidDownloads : {
+          useDownloadManager : true,
+          notification : true,
+          description : `Downloading Konachan - ${data.id}.${ext}`,
+          mime: mime,
+          path : `${RNFetchBlob.fs.dirs.DownloadDir}/syaro_tmp/${site.name} - ${data.id}.${ext}`
+        }
+      })
+      .fetch('GET', url)
+
+      if(!(await RNFetchBlob.fs.exists(`${RNFetchBlob.fs.dirs.PictureDir}/syaro`))) {
+        await RNFetchBlob.fs.mkdir(`${RNFetchBlob.fs.dirs.PictureDir}/syaro`)
       }
-    })
-    .fetch('GET', url)
-    .then((resp) => {
-      resp.path()
-    })
+
+      // mv file to prevent files being deleted after uninstalling app
+      if(await RNFetchBlob.fs.exists(d.path())) {
+        await RNFetchBlob.fs.mv(d.path(), `${RNFetchBlob.fs.dirs.PictureDir}/syaro/${site.name} - ${data.id}.${ext}`)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
   }
+
 }
 
 const ImageProgress = createImageProgress(FastImage);
