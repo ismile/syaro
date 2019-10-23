@@ -215,7 +215,7 @@ const AppBarView = React.memo(function(props:{
         <Dialog.Title>About</Dialog.Title>
         <Dialog.Content>
           <List.Item
-          title='Syaro V0.9.0'
+          title='Syaro V0.10.0'
           onPress={()=> Linking.openURL('https://github.com/ismile')}
           description={'\u00A9 2019 ismile|Bajiguri'} />
         </Dialog.Content>
