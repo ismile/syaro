@@ -13,9 +13,4 @@ WARNING: This application may contains sexually explicit content that is not sui
 
 [Github Releases](https://github.com/ismile/syaro/releases)
 
-# Todo
-
-1. Allow user to add more booru hosts dynamically (https://github.com/ismile/syaro/blob/master/src/modules/booru/BooruMenu.tsx)
-
-
 Logo By [hatchful](hatchful.shopify.com)
